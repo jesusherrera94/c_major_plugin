@@ -1,0 +1,28 @@
+/*
+    1. graph -> is everything contain in a process (input + processor + output)
+    2. endpoints -> access points or inputs and outputs, in cmajor is the way to connect to the exterior world(loke html, js frontend)
+    3. nodes -> this is a process, an algorithm, each processing part!
+    4 conections -> the linkers between nodes and endpoints.
+
+*/
+
+// graph <name> [[ main ]] { //code here }
+graph my_first_plugin [[ main ]]
+{
+    // to the sound card
+    output stream float out;
+
+    // inputs declared here!
+    input {
+        osc.frequencyIn [[ min: 20.0, max: 20000.0, init: 300.0]];
+        gain.volume [[ min: -84.0, max: 6.0, init: -2.0]];
+    }
+    // the same way the inputs were declared, can be implemente into node and connections!
+    node osc = std::oscillators::Sine(float);
+    node gain = std::levels::SmoothedGain(float);
+
+    // connecting the oscillator to the gain stage
+    // connection node.out -> node.in, it means the node out asigned to node out. 
+    connection osc.out -> gain.in;
+    connection gain.out -> out;
+}
