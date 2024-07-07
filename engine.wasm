@@ -1,0 +1,257 @@
+	.text
+	.def	@feat.00;
+	.scl	3;
+	.type	0;
+	.endef
+	.globl	@feat.00
+.set @feat.00, 0
+	.file	"cmajor"
+	.def	_sendEvent_frequencyIn;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	_sendEvent_frequencyIn          # -- Begin function _sendEvent_frequencyIn
+	.p2align	4, 0x90
+_sendEvent_frequencyIn:                 # @_sendEvent_frequencyIn
+# %bb.0:
+	movabsq	$.L_frequency, %rax
+	vcvtss2sd	%xmm1, %xmm1, %xmm0
+	vdivsd	(%rax), %xmm0, %xmm0
+	vcvttsd2si	%xmm0, %rax
+	vcvtsi2sd	%rax, %xmm2, %xmm1
+	vsubsd	%xmm1, %xmm0, %xmm0
+	vcvtsd2ss	%xmm0, %xmm0, %xmm0
+	vmovss	%xmm0, 28(%rcx)
+	retq
+                                        # -- End function
+	.def	_sendEvent_volume;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	__real@c2c80000                 # -- Begin function _sendEvent_volume
+	.section	.rdata,"dr",discard,__real@c2c80000
+	.p2align	2
+__real@c2c80000:
+	.long	0xc2c80000                      # float -100
+	.globl	__real@3d4ccccd
+	.section	.rdata,"dr",discard,__real@3d4ccccd
+	.p2align	2
+__real@3d4ccccd:
+	.long	0x3d4ccccd                      # float 0.0500000007
+	.globl	__real@41200000
+	.section	.rdata,"dr",discard,__real@41200000
+	.p2align	2
+__real@41200000:
+	.long	0x41200000                      # float 10
+	.globl	__real@3ff0000000000000
+	.section	.rdata,"dr",discard,__real@3ff0000000000000
+	.p2align	3
+__real@3ff0000000000000:
+	.quad	0x3ff0000000000000              # double 1
+	.globl	__real@3e4ccccd
+	.section	.rdata,"dr",discard,__real@3e4ccccd
+	.p2align	2
+__real@3e4ccccd:
+	.long	0x3e4ccccd                      # float 0.200000003
+	.text
+	.globl	_sendEvent_volume
+	.p2align	4, 0x90
+_sendEvent_volume:                      # @_sendEvent_volume
+# %bb.0:
+	pushq	%rsi
+	subq	$32, %rsp
+	movabsq	$__real@c2c80000, %rax
+	movq	%rcx, %rsi
+	vxorps	%xmm0, %xmm0, %xmm0
+	vucomiss	(%rax), %xmm1
+	jbe	.LBB1_2
+# %bb.1:                                # %select.true.sink
+	movabsq	$__real@3d4ccccd, %rax
+	vmulss	(%rax), %xmm1, %xmm1
+	movabsq	$__real@41200000, %rax
+	vmovss	(%rax), %xmm0                   # xmm0 = mem[0],zero,zero,zero
+	movabsq	$powf, %rax
+	callq	*%rax
+.LBB1_2:                                # %select.end
+	movabsq	$__real@3ff0000000000000, %rcx
+	movabsq	$.L_frequency, %rax
+	vmovsd	(%rcx), %xmm1                   # xmm1 = mem[0],zero
+	movl	$1, %ecx
+	vdivsd	(%rax), %xmm1, %xmm1
+	movabsq	$__real@3e4ccccd, %rax
+	vmovss	%xmm0, 40(%rsi)
+	vmovss	(%rax), %xmm2                   # xmm2 = mem[0],zero,zero,zero
+	vcvtsd2ss	%xmm1, %xmm1, %xmm1
+	vdivss	%xmm1, %xmm2, %xmm1
+	vmovss	36(%rsi), %xmm2                 # xmm2 = mem[0],zero,zero,zero
+	vcvttss2si	%xmm1, %eax
+	vcvtsi2ssl	48(%rsi), %xmm3, %xmm1
+	cmpl	$2, %eax
+	vmulss	44(%rsi), %xmm1, %xmm1
+	cmovgel	%eax, %ecx
+	vsubss	%xmm1, %xmm2, %xmm1
+	vcvtsi2ss	%ecx, %xmm3, %xmm2
+	vsubss	%xmm1, %xmm0, %xmm1
+	vdivss	%xmm2, %xmm1, %xmm1
+	vmovss	%xmm1, 44(%rsi)
+	movl	%ecx, 48(%rsi)
+	vmovss	%xmm0, 36(%rsi)
+	addq	$32, %rsp
+	popq	%rsi
+	retq
+                                        # -- End function
+	.def	initialise;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	__real@407b800000000000         # -- Begin function initialise
+	.section	.rdata,"dr",discard,__real@407b800000000000
+	.p2align	3
+__real@407b800000000000:
+	.quad	0x407b800000000000              # double 440
+	.globl	__xmm@00000000000000003f8000003f800000
+	.section	.rdata,"dr",discard,__xmm@00000000000000003f8000003f800000
+	.p2align	4
+__xmm@00000000000000003f8000003f800000:
+	.long	1065353216                      # 0x3f800000
+	.long	1065353216                      # 0x3f800000
+	.long	0                               # 0x0
+	.long	0                               # 0x0
+	.text
+	.globl	initialise
+	.p2align	4, 0x90
+initialise:                             # @initialise
+# %bb.0:
+	movabsq	$__real@407b800000000000, %rax
+	movabsq	$__xmm@00000000000000003f8000003f800000, %rdx
+	vmovsd	(%rax), %xmm0                   # xmm0 = mem[0],zero
+	vdivsd	%xmm3, %xmm0, %xmm0
+	vcvttsd2si	%xmm0, %rax
+	vcvtsi2sd	%rax, %xmm1, %xmm1
+	movabsq	$.L_frequency, %rax
+	vsubsd	%xmm1, %xmm0, %xmm0
+	vcvtsd2ss	%xmm0, %xmm0, %xmm0
+	vmovss	%xmm0, 28(%rcx)
+	vmovaps	(%rdx), %xmm0
+	vmovsd	%xmm3, (%rax)
+	vmovups	%xmm0, 36(%rcx)
+	retq
+                                        # -- End function
+	.def	advanceBlock;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	__real@bf800000                 # -- Begin function advanceBlock
+	.section	.rdata,"dr",discard,__real@bf800000
+	.p2align	2
+__real@bf800000:
+	.long	0xbf800000                      # float -1
+	.globl	__real@3f800000
+	.section	.rdata,"dr",discard,__real@3f800000
+	.p2align	2
+__real@3f800000:
+	.long	0x3f800000                      # float 1
+	.globl	__real@40c90fdb
+	.section	.rdata,"dr",discard,__real@40c90fdb
+	.p2align	2
+__real@40c90fdb:
+	.long	0x40c90fdb                      # float 6.28318548
+	.text
+	.globl	advanceBlock
+	.p2align	4, 0x90
+advanceBlock:                           # @advanceBlock
+# %bb.0:
+	pushq	%r14
+	pushq	%rsi
+	pushq	%rdi
+	pushq	%rbx
+	subq	$104, %rsp
+	vmovaps	%xmm9, 80(%rsp)                 # 16-byte Spill
+	vmovaps	%xmm8, 64(%rsp)                 # 16-byte Spill
+	vmovaps	%xmm7, 48(%rsp)                 # 16-byte Spill
+	vmovaps	%xmm6, 32(%rsp)                 # 16-byte Spill
+	movq	%rcx, %rdi
+	cmpl	%r8d, (%rcx)
+	jne	.LBB3_1
+.LBB3_11:                               # %._crit_edge
+	vmovaps	32(%rsp), %xmm6                 # 16-byte Reload
+	vmovaps	48(%rsp), %xmm7                 # 16-byte Reload
+	vmovaps	64(%rsp), %xmm8                 # 16-byte Reload
+	vmovaps	80(%rsp), %xmm9                 # 16-byte Reload
+	movl	$0, (%rdi)
+	addq	$104, %rsp
+	popq	%rbx
+	popq	%rdi
+	popq	%rsi
+	popq	%r14
+	retq
+.LBB3_1:                                # %.lr.ph
+	movq	%rdx, %rbx
+	movabsq	$__real@bf800000, %rax
+	movabsq	$__real@3f800000, %rdx
+	movabsq	$__real@40c90fdb, %rcx
+	movabsq	$sinf, %r14
+	movl	%r8d, %esi
+	vxorps	%xmm6, %xmm6, %xmm6
+	vmovss	(%rax), %xmm8                   # xmm8 = mem[0],zero,zero,zero
+	vmovss	(%rdx), %xmm9                   # xmm9 = mem[0],zero,zero,zero
+	vmovss	(%rcx), %xmm7                   # xmm7 = mem[0],zero,zero,zero
+	jmp	.LBB3_2
+	.p2align	4, 0x90
+.LBB3_5:                                #   in Loop: Header=BB3_2 Depth=1
+	vxorps	%xmm1, %xmm1, %xmm1
+.LBB3_10:                               # %main.exit
+                                        #   in Loop: Header=BB3_2 Depth=1
+	vmulss	%xmm1, %xmm0, %xmm0
+	movslq	(%rdi), %rax
+	vaddss	%xmm6, %xmm0, %xmm0
+	vmovss	%xmm0, (%rbx,%rax,4)
+	movl	(%rdi), %eax
+	incl	%eax
+	movl	%eax, (%rdi)
+	cmpl	%esi, %eax
+	je	.LBB3_11
+.LBB3_2:                                # =>This Inner Loop Header: Depth=1
+	cmpl	$-1, 32(%rdi)
+	vxorps	%xmm0, %xmm0, %xmm0
+	je	.LBB3_4
+# %bb.3:                                # %.loopexit.i.i
+                                        #   in Loop: Header=BB3_2 Depth=1
+	vmovss	24(%rdi), %xmm0                 # xmm0 = mem[0],zero,zero,zero
+	vaddss	28(%rdi), %xmm0, %xmm1
+	vmulss	%xmm7, %xmm0, %xmm0
+	vaddss	%xmm1, %xmm8, %xmm2
+	vcmpnless	%xmm1, %xmm9, %xmm3
+	vblendvps	%xmm3, %xmm1, %xmm2, %xmm1
+	vmovss	%xmm1, 24(%rdi)
+	callq	*%r14
+	vaddss	%xmm6, %xmm0, %xmm0
+	movl	$1, 32(%rdi)
+.LBB3_4:                                # %std__oscillators__Sine__main.exit.i
+                                        #   in Loop: Header=BB3_2 Depth=1
+	cmpl	$-1, 52(%rdi)
+	je	.LBB3_5
+# %bb.6:                                # %.loopexit.i.i.i
+                                        #   in Loop: Header=BB3_2 Depth=1
+	movl	48(%rdi), %eax
+	testl	%eax, %eax
+	jle	.LBB3_8
+# %bb.7:                                #   in Loop: Header=BB3_2 Depth=1
+	decl	%eax
+	movl	%eax, 48(%rdi)
+	vcvtsi2ss	%eax, %xmm4, %xmm1
+	vmulss	44(%rdi), %xmm1, %xmm1
+	vmovss	36(%rdi), %xmm2                 # xmm2 = mem[0],zero,zero,zero
+	vsubss	%xmm1, %xmm2, %xmm1
+	jmp	.LBB3_9
+	.p2align	4, 0x90
+.LBB3_8:                                #   in Loop: Header=BB3_2 Depth=1
+	vmovss	36(%rdi), %xmm1                 # xmm1 = mem[0],zero,zero,zero
+.LBB3_9:                                # %std__smoothing__getNext.exit.i.i.i
+                                        #   in Loop: Header=BB3_2 Depth=1
+	vaddss	%xmm6, %xmm1, %xmm1
+	movl	$1, 52(%rdi)
+	jmp	.LBB3_10
+                                        # -- End function
+	.lcomm	.L_frequency,8,8                # @_frequency
+	.globl	_fltused
