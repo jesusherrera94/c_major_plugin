@@ -9,5 +9,11 @@
     "manufacturer":     "Your Company Goes Here",
     "isInstrument":     true,
 
-    "source":           "c_major_plugin.cmajor"
+    "source":           "c_major_plugin.cmajor",
+    "view": {
+      "src":       "view/index.js",
+      "width":     400,
+      "height":    400,
+      "resizable": false
+    }
 }
